@@ -25,9 +25,10 @@ jobs:
       - name: CI Bootstrap
         run: |
           src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/acidanthera/ocbuild/master/ci-bootstrap.sh) && eval "$src" || exit 1
-      - name: Lilu Bootstrap
+      - name: Lilu 1.6.9 SDK
         run: |
-          src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/acidanthera/Lilu/master/Lilu/Scripts/bootstrap.sh) && eval "$src" || exit 1
+          curl -fL https://github.com/acidanthera/Lilu/releases/download/1.6.9/Lilu-1.6.9-DEBUG.zip -o /tmp/Lilu.zip
+          unzip -q /tmp/Lilu.zip
 
       - run: xcodebuild -jobs 1 -target WMIDellSensors -configuration Release -arch x86_64 MACOSX_DEPLOYMENT_TARGET=10.13
       - run: xcodebuild -jobs 1 -target wmitool -configuration Release -arch x86_64 MACOSX_DEPLOYMENT_TARGET=10.13
