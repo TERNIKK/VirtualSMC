@@ -34,7 +34,7 @@ void SMCProtocolMMIO::submitData() {
 		static_assert(SMC_MMIO_WRITE_COMMAND == SMC_MMIO_READ_RESULT, "Write Command is uncleared");
 		
 		mmioWrite<SMC_DATA_SIZE, SMC_MMIO_WRITE_DATA_SIZE>(dataSize);
-		lilu_os_memcpy(mmioPtr<SMC_DATA, 0>(), dataBuffer, SMC_MAX_DATA_SIZE);
+			lilu_os_memcpy((mmioPtr<SMC_DATA, 0>()), dataBuffer, SMC_MAX_DATA_SIZE);
 		
 		MachInfo::setKernelWriting(false, KernelPatcher::kernelWriteLock);
 	}
@@ -106,7 +106,7 @@ void SMCProtocolMMIO::setInterrupt(SMC_EVENT_CODE code, const void *data, size_t
 	if (code == SmcEventLogMessage) {
 		if (MachInfo::setKernelWriting(true, KernelPatcher::kernelWriteLock) == KERN_SUCCESS) {
 			auto writtenSize = size > SMC_MAX_LOG_SIZE ? SMC_MAX_DATA_SIZE : size;
-			lilu_os_memcpy(mmioPtr<SMC_LOG, SMC_MMIO_READ_LOG>(), data, writtenSize);
+				lilu_os_memcpy((mmioPtr<SMC_LOG, SMC_MMIO_READ_LOG>()), data, writtenSize);
 			if (writtenSize < SMC_MAX_LOG_SIZE)
 				bzero(mmioPtr<SMC_LOG, SMC_MMIO_READ_LOG>() + writtenSize, SMC_MAX_LOG_SIZE-writtenSize);
 			MachInfo::setKernelWriting(false, KernelPatcher::kernelWriteLock);
