@@ -16,9 +16,6 @@
  * See the GNU General Public License for more details.
  */
 
-// system
-#include <errno.h>
-
 // public
 #include "cmos.hpp"
 #include "types.hpp"
